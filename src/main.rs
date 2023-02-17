@@ -1,11 +1,11 @@
-use std::net::TcpListener;
+use crate::core::corex::CoreX;
 
-fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+mod core;
 
-    for stream in listener.incoming() {
-        let stream = stream.unwrap();
+#[async_std::main]
+async fn main() {
+    let corex = CoreX::new();
+    corex.init().await;
 
-        println!("Connection established!");
-    }
+    corex.register_agent().await;
 }
