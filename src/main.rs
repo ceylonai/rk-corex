@@ -1,11 +1,15 @@
 use crate::agent::agent_manager::{Agent, AgentManager};
 use crate::core::corex::CoreX;
 
+
 mod core;
 pub mod agent;
+pub mod logger;
+
 
 #[async_std::main]
 async fn main() {
+    let mut log = logger::get_logger();
     let mut corex = CoreX::new("corex".to_string());
     corex.init().await;
 
@@ -17,9 +21,9 @@ async fn main() {
     let res = match corex.register(agent).await {
         Ok(res) => res,
         Err(err) => {
-            println!("err: {:?}", err);
+            log.error(&format!("error: {:?}", err));
             return;
         }
     };
-    println!("res: {:?}", res.key());
+    log.info(&format!("agent registered: {:?}", res.key()));
 }

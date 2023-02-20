@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 use crate::agent::agent_manager::{Agent, AgentError, AgentKey, AgentManager, AgentStore};
+use crate::logger;
 
 pub struct CoreX {
     node_name: String,
@@ -15,7 +16,8 @@ impl CoreX {
     }
 
     pub async fn init(&self) {
-        println!("CoreX: init");
+        let mut log = logger::get_logger();
+        log.info(&format!("{} initialized", self.node_name));
     }
 }
 
