@@ -8,5 +8,6 @@ edition = "2021"
 [dependencies]
 paris = "1.5.13"
 async-std = { version = "1.12.0", features = ["attributes"] }
+async-trait = "0.1.64"
 futures = "0.3.26"
-
+nanoid = "0.4.0"
