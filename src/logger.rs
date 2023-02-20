@@ -1,6 +1,6 @@
 use paris::Logger;
 
 pub fn get_logger<'a>() -> Logger<'a> {
-    let mut log = Logger::new();
+    let log = Logger::new();
     log
 }

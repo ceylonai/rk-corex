@@ -12,8 +12,6 @@ async fn main() {
     let mut log = logger::get_logger();
     let mut corex = CoreX::new("corex".to_string());
     corex.init().await;
-
-
     let agent = Agent::new(
         "0.0.1".to_string(),
         "test agent".to_string(),
