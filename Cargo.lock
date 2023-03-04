@@ -2252,10 +2252,10 @@ dependencies = [
  "async-trait",
  "nanoid",
  "paris",
+ "rx-transporter",
  "serde",
  "tokio",
  "toml 0.7.2",
- "transporter",
 ]
 
 [[package]]
@@ -2332,6 +2332,16 @@ dependencies = [
  "futures",
  "pin-project",
  "static_assertions",
+]
+
+[[package]]
+name = "rx-transporter"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "libp2p",
+ "paris",
+ "tokio",
 ]
 
 [[package]]
@@ -2786,16 +2796,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "24eb03ba0eab1fd845050058ce5e616558e8f8d8fca633e6b163fe25c797213a"
 dependencies = [
  "once_cell",
-]
-
-[[package]]
-name = "transporter"
-version = "0.1.0"
-dependencies = [
- "futures",
- "libp2p",
- "paris",
- "tokio",
 ]
 
 [[package]]
@@ -3276,6 +3276,11 @@ dependencies = [
 [[package]]
 name = "xclient"
 version = "0.1.0"
+dependencies = [
+ "rk-corex",
+ "rx-transporter",
+ "tokio",
+]
 
 [[package]]
 name = "xrunner"
@@ -3284,6 +3289,7 @@ dependencies = [
  "async-std",
  "paris",
  "rk-corex",
+ "tokio",
 ]
 
 [[package]]

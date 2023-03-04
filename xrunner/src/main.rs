@@ -1,7 +1,7 @@
 use rk_corex::core::corex::CoreX;
 use rk_corex::logger;
 
-#[async_std::main]
+#[tokio::main]
 async fn main() {
     let mut log = logger::get_logger();
     let corex = CoreX::new("core-x".to_string());

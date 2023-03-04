@@ -7,6 +7,13 @@ impl CoreX {
         let mut log = logger::get_logger();
         log.info(&format!("{} running", self.node_name));
         let (tx, mut rx) = mpsc::channel::<String>(32);
-        rk_transporter::start_transporter(tx).await;
+        tokio::task::spawn(async move {
+            loop {
+                let msg = rx.recv().await;
+                log.info(&format!("Received: {:?}", msg));
+                println!("Received: {:?}", msg);
+            }
+        });
+        rk_transporter::start_transporter(tx, None).await;
     }
 }

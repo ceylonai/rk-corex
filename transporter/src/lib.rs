@@ -1,9 +1,14 @@
 use futures::StreamExt;
-use libp2p::{identity, Multiaddr, PeerId, Swarm};
-use libp2p::ping::Behaviour;
-use libp2p::swarm::SwarmEvent;
+use libp2p::{identity, Multiaddr, PeerId, ping, Swarm};
+use libp2p::swarm::{keep_alive, NetworkBehaviour, SwarmEvent};
 
-pub async fn start_transporter(tx: tokio::sync::mpsc::Sender<String>) {
+#[derive(NetworkBehaviour, Default)]
+struct Behaviour {
+    keep_alive: keep_alive::Behaviour,
+    ping: ping::Behaviour,
+}
+
+pub async fn start_transporter(tx: tokio::sync::mpsc::Sender<String>, connection: Option<String>) {
     let local_key = identity::Keypair::generate_ed25519();
     let local_peer_id = PeerId::from(local_key.public());
     println!("Local peer id: {local_peer_id:?}");
@@ -18,11 +23,16 @@ pub async fn start_transporter(tx: tokio::sync::mpsc::Sender<String>) {
 
     // Dial the peer identified by the multi-address given as the second
     // command-line argument, if any.
-    if let Some(addr) = std::env::args().nth(1) {
+    if let Some(addr) = connection {
         let remote: Multiaddr = addr.parse().unwrap();
-        swarm.dial(remote).unwrap();
-        println!("Dialed {addr}")
+        match swarm.dial(remote) {
+            Ok(()) => println!("Dialed {addr}"),
+            Err(e) => println!("Failed to dial {addr}: {e}"),
+        };
+        println!("Dialed {addr}");
     }
+
+    tx.send(format!("Listening on")).await.unwrap();
 
     loop {
         match swarm.select_next_some().await {
