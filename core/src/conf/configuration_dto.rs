@@ -1,13 +1,13 @@
 use serde::{Serialize, Deserialize};
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
-pub struct AgentConfiguation {
+#[derive(Serialize, Deserialize, PartialEq, Debug, Default)]
+pub struct AgentConfiguration {
     protocol: String,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
-pub struct Configuation {
+#[derive(Serialize, Deserialize, PartialEq, Debug, Default)]
+pub struct Configuration {
     name: String,
     description: Option<String>,
-    agent: AgentConfiguation,
+    agent: AgentConfiguration,
 }

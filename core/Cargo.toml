@@ -17,4 +17,4 @@ futures = "0.3.26"
 nanoid = "0.4.0"
 
 serde = { version = "1.0.130", features = ["derive"] }
-serde_yaml = "0.9.17"
+toml = "0.7.2"
