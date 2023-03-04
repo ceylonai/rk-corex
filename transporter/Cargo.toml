@@ -1,21 +1,15 @@
 [package]
-name = "rk-corex"
+name = "transporter"
 version = "0.1.0"
 edition = "2021"
 
-
-[lib]
-name = "rk_corex"
-
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "rk_transporter"
 
 [dependencies]
 paris = "1.5.13"
-nanoid = "0.4.0"
-async-trait = "0.1.65"
-serde = { version = "1.0.130", features = ["derive"] }
-toml = "0.7.2"
+futures = "0.3.26"
 
 tokio = { version = "1.14.0", features = ["full"] }
-
-transporter = { path = "../transporter" }
+libp2p = { version = "0.51.0", features = ["tcp", "dns", "async-std", "noise", "mplex", "yamux", "websocket", "ping", "macros"] }
