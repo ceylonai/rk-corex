@@ -1,0 +1,5 @@
+name: Agent Tester
+description: A test agent
+
+agent:
+  - protocol: udp
