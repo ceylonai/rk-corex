@@ -4,19 +4,43 @@ use crate::logger;
 use crate::conf::configuration_dto::Configuration;
 
 impl Configuration {
-    pub fn init_to_file(file_path: &str) {
+    pub fn init_configs(config_dir: &str) -> Configuration {
+        let config = Configuration::from_file(&format!("{config_dir}/core-x.toml"));
+        config
+    }
+
+
+    pub fn init_config_dir(config_dir: &str) {
         let mut log = logger::get_logger();
-        log.info(&format!("Writing Default configuation file: {}", file_path));
+
+        log.info(&format!("Creating configuration directory: {config_dir}"));
+
+        // Check Config Directory exists
+        if std::path::Path::new(config_dir).exists() {
+            log.info(&format!("Directory already exists: {config_dir}"));
+        } else {
+            fs::create_dir(config_dir).unwrap();
+        }
+    }
+
+
+    fn init_to_file(config_path: &str) {
+        let mut log = logger::get_logger();
+
+        let basic_config_path = format!("{config_path}/core-x.toml");
+
+
+        log.info(&format!("Writing Default configuration file: {basic_config_path}"));
 
         // Check file exists
-        if std::path::Path::new(file_path).exists() {
-            log.info(&format!("File already exists: {}", file_path));
+        if std::path::Path::new(config_path).exists() {
+            log.info(&format!("File already exists: {config_path}"));
             return;
         }
 
         let config = Configuration::default();
         let d = toml::to_string(&config).unwrap();
-        std::fs::write(file_path, d).unwrap();
+        fs::write(config_path, d).unwrap();
     }
 
 
@@ -48,9 +72,9 @@ impl Configuration {
             // `d` is a local variable.
             Ok(d) => d,
             // Handle the `error` case.
-            Err(_) => {
+            Err(er) => {
                 // Write `msg` to `stderr`.
-                log.error(&format!("Unable to load data from `{}`", file_path));
+                log.error(&format!("Unable to load data from `{file_path} {er}`"));
                 // Exit the program with exit code `1`.
                 exit(1);
             }

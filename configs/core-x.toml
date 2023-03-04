@@ -1,0 +1,5 @@
+name = "Agent X"
+description = ""
+
+[agent]
+protocol = "udp"
