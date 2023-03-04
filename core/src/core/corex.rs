@@ -1,3 +1,5 @@
+mod run_method;
+
 use conf::configuration_dto::Configuration;
 
 use crate::{conf, logger};
@@ -16,10 +18,6 @@ impl CoreX {
 
         log.info(&format!("Configuration: {:?}", self.config));
         log.info(&format!("{} initialized", self.node_name));
-    }
-    pub async fn run(&self) {
-        let mut log = logger::get_logger();
-        log.info(&format!("{} running", self.node_name));
     }
 }
 

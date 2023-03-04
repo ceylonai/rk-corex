@@ -18,3 +18,4 @@ nanoid = "0.4.0"
 
 serde = { version = "1.0.130", features = ["derive"] }
 toml = "0.7.2"
+libp2p = { version = "0.51.0", features = ["tcp", "dns", "async-std", "noise", "mplex", "yamux", "websocket", "ping", "macros"] }
